@@ -1,6 +1,7 @@
 package kitchenpos.application;
 
-import kitchenpos.deliveryorder.adapter.out.api.KitchenridersClient;
+
+import kitchenpos.order.deliveryorder.adapter.out.api.KitchenridersClient;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -11,7 +12,7 @@ public class FakeKitchenridersClient implements KitchenridersClient {
     private String deliveryAddress;
 
     @Override
-    public void requestDelivery(final UUID orderId, final BigDecimal amount, final String deliveryAddress) {
+    public void requestDelivery(UUID orderId, BigDecimal amount, String deliveryAddress) {
         this.orderId = orderId;
         this.amount = amount;
         this.deliveryAddress = deliveryAddress;
