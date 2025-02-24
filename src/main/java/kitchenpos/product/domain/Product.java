@@ -19,7 +19,19 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private Price price;//TODO 객체형 불일치 어떻게 넣을건지 고민
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = new Price(price);
+    }
 
     public Product() {
     }
@@ -40,11 +52,4 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(final BigDecimal price) {
-        this.price = price;
-    }
 }

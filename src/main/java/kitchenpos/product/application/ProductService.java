@@ -5,6 +5,7 @@ import kitchenpos.menu.application.port.out.MenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.product.application.port.out.ProductRepository;
+import kitchenpos.product.domain.Price;
 import kitchenpos.product.domain.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,10 +34,7 @@ public class ProductService {
 
     @Transactional
     public Product create(final Product request) {
-        final BigDecimal price = request.getPrice();
-        if (Objects.isNull(price) || price.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException();
-        }
+        final var price = request.getPrice();
         final String name = request.getName();
         if (Objects.isNull(name) || purgomalumClient.containsProfanity(name)) {
             throw new IllegalArgumentException();
@@ -50,10 +48,8 @@ public class ProductService {
 
     @Transactional
     public Product changePrice(final UUID productId, final Product request) {
-        final BigDecimal price = request.getPrice();
-        if (Objects.isNull(price) || price.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException();
-        }
+        final var price = request.getPrice();
+
         final Product product = productRepository.findById(productId)
                 .orElseThrow(NoSuchElementException::new);
         product.setPrice(price);
@@ -64,7 +60,7 @@ public class ProductService {
                 sum = sum.add(
                         menuProduct.getProduct()
                                 .getPrice()
-                                .multiply(BigDecimal.valueOf(menuProduct.getQuantity()))
+                                .multiplyPrice(menuProduct.getQuantity())
                 );
             }
             if (menu.getPrice().compareTo(sum) > 0) {
