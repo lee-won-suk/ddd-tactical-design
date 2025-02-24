@@ -244,7 +244,8 @@ docker compose -p kitchenpos up -d
 - `product`는 `price`과 `name`을 가지고 있습니다.
 ### `product`의 `price`와 `name`을 입력하여 등록합니다.<br/>
   - ### 검증
-    - `product`의 `price`이 0원 이상이어야 합니다.
+    - [x] `product`의 `price`이 없으면 안됩니다.
+    - [x] `product`의 `price`이 0원 이상이어야 합니다.
     - `product`의 `name`에는 `profanity`가 포함될 수 없습니다.<br/><br/>
 ### `product`의 `price`을 변경할 수 있습니다.<br/>
 - 등록되어 있는 `product`의 `productId`와 변경할 `product`의 `name`,`price`,`productId`를 입력받습니다.<br/>
