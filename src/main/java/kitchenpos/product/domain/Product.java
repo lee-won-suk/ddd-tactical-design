@@ -1,12 +1,10 @@
 package kitchenpos.product.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
 
 @Table(name = "product")
 @Entity
@@ -18,6 +16,7 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Embedded
     @Column(name = "price", nullable = false)
     private Price price;//TODO 객체형 불일치 어떻게 넣을건지 고민
 
