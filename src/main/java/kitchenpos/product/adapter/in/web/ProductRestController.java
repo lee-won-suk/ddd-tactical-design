@@ -1,5 +1,7 @@
 package kitchenpos.product.adapter.in.web;
 
+import kitchenpos.product.adapter.in.web.mapper.ProductMapper;
+import kitchenpos.product.adapter.in.web.request.ProductRequestDto;
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +15,16 @@ import java.util.UUID;
 @RestController
 public class ProductRestController {
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
-    public ProductRestController(final ProductService productService) {
+    public ProductRestController(final ProductService productService, ProductMapper productMapper) {
         this.productService = productService;
+        this.productMapper = productMapper;
     }
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody final Product request) {
-        final Product response = productService.create(request);
+    public ResponseEntity<Product> create(@RequestBody final ProductRequestDto request) {
+        final Product response = productService.create(productMapper.mapProduct(request));
         return ResponseEntity.created(URI.create("/api/products/" + response.getId()))
                 .body(response);
     }
