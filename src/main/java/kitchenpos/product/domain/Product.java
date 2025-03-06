@@ -1,6 +1,8 @@
 package kitchenpos.product.domain;
 
 import jakarta.persistence.*;
+import kitchenpos.product.domain.vo.Name;
+import kitchenpos.product.domain.vo.Price;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,12 +15,17 @@ public class Product {
     @Id
     private UUID id;
 
+    @Embedded
     @Column(name = "name", nullable = false)
-    private String name;
+    private Name name;
 
     @Embedded
     @Column(name = "price", nullable = false)
-    private Price price;//TODO 객체형 불일치 어떻게 넣을건지 고민
+    private Price price;
+
+    public Product() {
+
+    }
 
     public Price getPrice() {
         return price;
@@ -32,7 +39,15 @@ public class Product {
         this.price = new Price(price);
     }
 
-    public Product() {
+    public Product(UUID uuid, String name, BigDecimal price) {
+        this.id = uuid;
+        this.name = new Name(name);
+        this.price = new Price(price);
+    }
+    public Product(UUID uuid, Name name, Price price) {
+        this.id = uuid;
+        this.name = name;
+        this.price = price;
     }
 
     public UUID getId() {
@@ -43,11 +58,11 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
-    public void setName(final String name) {
+    public void setName(Name name) {
         this.name = name;
     }
 
