@@ -5,7 +5,6 @@ import kitchenpos.menu.application.port.out.MenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.product.application.port.out.ProductRepository;
-import kitchenpos.product.domain.Price;
 import kitchenpos.product.domain.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,15 +33,9 @@ public class ProductService {
 
     @Transactional
     public Product create(final Product request) {
-        final var price = request.getPrice();
-        final String name = request.getName();
-        if (Objects.isNull(name) || purgomalumClient.containsProfanity(name)) {
-            throw new IllegalArgumentException();
-        }
-        final Product product = new Product();
-        product.setId(UUID.randomUUID());
-        product.setName(name);
-        product.setPrice(price);
+        final var name = request.getName();
+        name.containsProfanity(purgomalumClient);
+        final Product product = new Product(UUID.randomUUID(),name, request.getPrice());
         return productRepository.save(product);
     }
 
