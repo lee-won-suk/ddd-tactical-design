@@ -1,4 +1,4 @@
-package kitchenpos.product.domain;
+package kitchenpos.product.domain.vo;
 
 import jakarta.persistence.Embeddable;
 
